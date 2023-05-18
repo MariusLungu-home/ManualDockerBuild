@@ -5,8 +5,10 @@ FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
 COPY ./SampleApp.sln ./
 COPY ./SampleWebApp/SampleWebApp.csproj ./SampleWebApp/
+COPY ./TestProject1/TestProject1.csproj ./TestProject1/
 RUN dotnet restore
 COPY . .
+RUN dotnet test ./TestProject1/TestProject1.csproj
 RUN dotnet publish ./SampleWebApp/SampleWebApp.csproj -c Release -o /app/
 
 FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS final
